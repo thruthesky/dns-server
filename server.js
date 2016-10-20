@@ -1,5 +1,21 @@
 'use strict';
 
+/**
+ * Configuration
+ */
+// Whitelist
+let whitelist = [ 'wikipedia', 'naver', 'daum', 'philgo', 'google', 'witheng', 'skype' ];
+let TTL_FOR_BLOCK = 1800;
+let IP_FOR_BLOCK = '218.50.181.110';
+
+
+
+
+
+
+
+// ------------------------ Do not edit below -------------------------------
+
 let dns = require('native-dns');
 let server = dns.createServer();
 
@@ -34,7 +50,6 @@ function proxy(question, response, cb) {
 
 let async = require('async');
 
-let whitelist = [ 'naver', 'daum', 'philgo', 'google', 'witheng', 'skype' ];
 
 function handleRequest(request, response) {
 
@@ -57,8 +72,8 @@ function handleRequest(request, response) {
           console.log('BLOCK: request from: ', request.address.address, ' for: ', question.name);
           let record = {};
           record.name = question.name;
-          record.ttl = record.ttl || 1800;
-          record.address = '218.50.181.110';
+          record.ttl = TTL_FOR_BLOCK;
+          record.address = IP_FOR_BLOCK;
           record.type = 'A';
           response.answer.push(dns['A'](record));
     }
